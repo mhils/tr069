@@ -1,0 +1,6 @@
+[submodule "monitor/mitmproxy"]
+	path = monitor/mitmproxy
+	url = git@github.com:mhils/mitmproxy
+[submodule "docker-testenv"]
+	path = docker-testenv
+	url = git@github.com:mhils/tr069-docker.git

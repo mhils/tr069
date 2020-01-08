@@ -1,0 +1,58 @@
+<!-- source: https://www.heise.de/ct/artikel/DSL-fernkonfiguriert-221789.html?seite=9 -->
+
+      <cwmp:Inform>
+         <DeviceId>
+            <Manufacturer>AVM</Manufacturer>
+            <OUI>00040E</OUI>
+            <ProductClass>FRITZ!Box</ProductClass>
+            <SerialNumber>00150C492F89</SerialNumber>
+            </DeviceId>
+         <MaxEnvelopes>1</MaxEnvelopes>
+         <CurrentTime>2007-01-26T10:33:12</CurrentTime>
+         <RetryCount>0</RetryCount>
+         <Event soap-enc:arrayType="cwmp:EventStruct[1]">
+            <EventStruct>
+               <EventCode>0 BOOTSTRAP</EventCode>
+               <CommandKey></CommandKey>
+            </EventStruct>
+         </Event>
+         <ParameterList soap-enc:arrayType="cwmp:ParameterValueStruct[7]">
+            <ParameterValueStruct>
+               <Name>InternetGatewayDevice.DeviceInfo.HardwareVersion</Name>
+               <Value xsi:type="xsd:string">AVM FRITZ!Box Fon WLAN 7170 ( )
+                  29.05.01</Value></ParameterValueStruct>
+            <ParameterValueStruct>
+               <Name>InternetGatewayDevice.DeviceInfo.SoftwareVersion</Name>
+               <Value xsi:type="xsd:string">29.05.01-release-build_1818-2904</ Value="Value">
+            </ParameterValueStruct>
+
+            <ParameterValueStruct>
+               <Name>InternetGatewayDevice.DeviceInfo.SpecVersion</Name>
+               <Value xsi:type="xsd:string">1.0</Value>
+            </ParameterValueStruct>
+
+            <ParameterValueStruct>
+               <Name>InternetGatewayDevice.DeviceInfo.ProvisioningCode</Name>
+
+               <Value xsi:type="xsd:string">000.000.000.000</Value>
+            </ ParameterValueStruct="ParameterValueStruct">
+
+            <ParameterValueStruct>
+               <Name>InternetGatewayDevice.ManagementServer.ParameterKey</Name>
+
+               <Value xsi:type="xsd:string"></Value>
+            </ParameterValueStruct>
+
+            <ParameterValueStruct>
+               <Name>InternetGatewayDevice.ManagementServer.ConnectionRequestURL</Name>
+
+               <Value xsi:type="xsd:string">http://194.175.125.104:8089/4b123c06</ Value="Value">
+            </ParameterValueStruct>
+
+            <ParameterValueStruct>
+               <Name>InternetGatewayDevice.WANDevice.1.WANConnectionDevice.
+                  1.WANPPPConnection.1.ExternalIPAddress</Name>
+               <Value xsi:type="xsd:string">194.175.125.104</Value>
+            </ ParameterValueStruct="ParameterValueStruct">
+         </ParameterList>
+      </cwmp:Inform>

@@ -1,0 +1,7 @@
+FROM python:3.6
+
+RUN pip3 install --no-cache-dir tornado
+WORKDIR /usr/src/tr069monitor
+COPY ./tr069monitor .
+
+CMD [ "python3", "collector.py" ]

@@ -1,0 +1,18 @@
+FROM python:3.6
+
+WORKDIR /usr/src/tr069monitor
+COPY ./mitmproxy ./mitmproxy
+RUN pip3 install --no-cache-dir -e ./mitmproxy
+COPY ./tr069monitor .
+
+# On a sensor, this should be mitmdump to keep memory usage stable
+# For demonstration, the web interface is nicer.
+CMD [ \
+	"mitmweb", \
+	"-p", "7547", \
+	"-R", "http://genieacs:7547/", \
+	"-s", "log_flows.py", \
+#	"-dd", \
+	"--no-browser", "--web-iface", "0.0.0.0", \
+	"--no-http2" \
+]
