@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>TR069 Honeyclient API Reference &#8212; TR-069 Honeyclient  documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tr069-honeyclient-api-reference">
+<h1>TR069 Honeyclient API Reference<a class="headerlink" href="#tr069-honeyclient-api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="tr-069-client">
+<h2>TR-069 Client<a class="headerlink" href="#tr-069-client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tr069.Client">
+<em class="property">class </em><code class="descclassname">tr069.</code><code class="descname">Client</code><span class="sig-paren">(</span><em>acs_url: str, device: tr069.data.device.Device = Device(AVM FRITZ!Box, Serial: 0896D776FAA2, 11 parameters), *, log: bool = True, basic_auth: typing.Union[typing.Tuple[str, str], NoneType] = None, digest_auth: typing.Union[typing.Tuple[str, str], NoneType] = None, cert: typing.Union[typing.Tuple[str, str], str] = None, **requests_kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#tr069.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>A TR-069 Client instance to interact with an ACS.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>acs_url</strong> &#8211; The ACS URL.</li>
+<li><strong>device</strong> &#8211; The device represented by the client.</li>
+<li><strong>log</strong> &#8211; If True, all requests and responses are logged to stdout.</li>
+<li><strong>basic_auth</strong> &#8211; A (user, pass) tuple used for HTTP basic authentication.</li>
+<li><strong>digest_auth</strong> &#8211; A (user, pass) tuple used for HTTP digest authentication.</li>
+<li><strong>cert</strong> &#8211; TLS Client Certificate, see <a class="reference external" href="http://docs.python-requests.org/en/master/user/advanced/#ssl-cert-verification">http://docs.python-requests.org/en/master/user/advanced/#ssl-cert-verification</a></li>
+<li><strong>**requests_kwargs</strong> &#8211; Additional arguments passed to subsequent internal calls of requests.post().</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="tr069.Client.request">
+<code class="descname">request</code><span class="sig-paren">(</span><em>data: str</em>, <em>*</em>, <em>fix_cwmp_id: bool = True</em>, <em>**kwargs</em><span class="sig-paren">)</span> &rarr; requests.models.Response<a class="headerlink" href="#tr069.Client.request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a HTTP request to the ACS.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> &#8211; The request body</li>
+<li><strong>fix_cwmp_id</strong> &#8211; If true, the cwmp:ID in the body will replaced with the cwmp:ID in the last response.</li>
+<li><strong>**kwargs</strong> &#8211; Arguments passed to self._session.post()</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The ACS&#8217; response.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.Client.replay">
+<code class="descname">replay</code><span class="sig-paren">(</span><em>request: typing.Union[requests.models.PreparedRequest</em>, <em>NoneType] = None</em><span class="sig-paren">)</span> &rarr; requests.models.Response<a class="headerlink" href="#tr069.Client.replay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replay a request that has previously been sent.
+Useful to e.g. test for nonce re-use.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>request</strong> &#8211; The request to replay. If no request is passed, the last request
+will be replayed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.Client.done">
+<code class="descname">done</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; requests.models.Response<a class="headerlink" href="#tr069.Client.done" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate to the ACS that the client has finished sending RPCs</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.Client.handle_server_rpcs">
+<code class="descname">handle_server_rpcs</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; int<a class="headerlink" href="#tr069.Client.handle_server_rpcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle server RPCs automatically, starting with the last already transmitted RPC.
+This is usually called immediately after .done()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of handled RPCs</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">NotImplementedError if automated handling of the RPC is not implemented.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.Client.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; None<a class="headerlink" href="#tr069.Client.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close any existing connections to the ACS and reset the session.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="remote-procedure-calls">
+<h3>Remote Procedure Calls<a class="headerlink" href="#remote-procedure-calls" title="Permalink to this headline">¶</a></h3>
+<p>For method signatures, see the RPC section below.</p>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">tr069.</code><code class="descname">Client</code></dt>
+<dd><dl class="method">
+<dt id="tr069.Client.inform">
+<code class="descname">inform</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span> &rarr; requests.models.Response<a class="headerlink" href="#tr069.Client.inform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Inform RPC</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.Client.get_rpc_methods">
+<code class="descname">get_rpc_methods</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; requests.models.Response<a class="headerlink" href="#tr069.Client.get_rpc_methods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a GetRPCMethods RPC</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.Client.request_download">
+<code class="descname">request_download</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span> &rarr; requests.models.Response<a class="headerlink" href="#tr069.Client.request_download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a RequestDownload RPC</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.Client.set_parameter_values_response">
+<code class="descname">set_parameter_values_response</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span> &rarr; requests.models.Response<a class="headerlink" href="#tr069.Client.set_parameter_values_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a SetParameterValuesResponse</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.Client.get_parameter_values_response">
+<code class="descname">get_parameter_values_response</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span> &rarr; requests.models.Response<a class="headerlink" href="#tr069.Client.get_parameter_values_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a GetParameterValuesResponse</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.Client.set_parameter_attributes_response">
+<code class="descname">set_parameter_attributes_response</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; requests.models.Response<a class="headerlink" href="#tr069.Client.set_parameter_attributes_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a SetParameterAttributesResponse</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.Client.get_parameter_names_response">
+<code class="descname">get_parameter_names_response</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span> &rarr; requests.models.Response<a class="headerlink" href="#tr069.Client.get_parameter_names_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a GetParameterNamesResponse</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="connection-request-server">
+<h2>Connection Request Server<a class="headerlink" href="#connection-request-server" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tr069.ConnectionRequestServer">
+<em class="property">class </em><code class="descclassname">tr069.</code><code class="descname">ConnectionRequestServer</code><span class="sig-paren">(</span><em>address: typing.Tuple[str</em>, <em>int] = (''</em>, <em>7547)</em>, <em>handle_manually: bool = False</em><span class="sig-paren">)</span> &rarr; None<a class="headerlink" href="#tr069.ConnectionRequestServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A minimal TR-069 Connection Request Server.</p>
+<p>Main purpose of this module is to detect that providers are sending
+connection requests, it implements no authentication whatsoever.
+Connection requests are acknowledged automatically by default
+and will be printed to stdout. For non-interactive use, users may
+call instance.queue.get() to wait for a connection request.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tr069.proxy">
+<span id="proxy-support"></span><h2>Proxy Support<a class="headerlink" href="#module-tr069.proxy" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="tr069.proxy.enable">
+<code class="descclassname">tr069.proxy.</code><code class="descname">enable</code><span class="sig-paren">(</span><em>url: str</em>, <em>ca_certs: typing.Union[str</em>, <em>NoneType] = None</em><span class="sig-paren">)</span> &rarr; None<a class="headerlink" href="#tr069.proxy.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Route all outgoing requests through a proxy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>url</strong> &#8211; The proxy URL.</li>
+<li><strong>ca_certs</strong> &#8211; path to a certificate list stored in PEM format (optional).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tr069.proxy.disable">
+<code class="descclassname">tr069.proxy.</code><code class="descname">disable</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; None<a class="headerlink" href="#tr069.proxy.disable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable proxying of requests.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tr069.data.device">
+<span id="devices"></span><h2>Devices<a class="headerlink" href="#module-tr069.data.device" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tr069.data.device.Device">
+<em class="property">class </em><code class="descclassname">tr069.data.device.</code><code class="descname">Device</code><span class="sig-paren">(</span><em>manufacturer</em>, <em>oui</em>, <em>product_class</em>, <em>serial</em>, <em>params: typing.Union[tr069.data.parameters.Parameters</em>, <em>NoneType] = None</em><span class="sig-paren">)</span><a class="headerlink" href="#tr069.data.device.Device" title="Permalink to this definition">¶</a></dt>
+<dd><p>A TR-069 Device.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tr069.data.device.from_xml">
+<code class="descclassname">device.</code><code class="descname">from_xml</code><span class="sig-paren">(</span><em>xml: str</em><span class="sig-paren">)</span> &rarr; tr069.data.device.Device<a class="headerlink" href="#tr069.data.device.from_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a device from an Inform XML.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.device.AVM_FRITZ_BOX_7490">
+<code class="descclassname">tr069.data.device.</code><code class="descname">AVM_FRITZ_BOX_7490</code><a class="headerlink" href="#tr069.data.device.AVM_FRITZ_BOX_7490" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Device(AVM FRITZ!Box, Serial</em> &#8211; 0896D776FAA2, 11 parameters)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.device.FREECWMP">
+<code class="descclassname">tr069.data.device.</code><code class="descname">FREECWMP</code><a class="headerlink" href="#tr069.data.device.FREECWMP" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Device(freecwmp freecwmp, Serial</em> &#8211; FFFFFF123456, 11 parameters)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.device.DEFAULT">
+<code class="descclassname">tr069.data.device.</code><code class="descname">DEFAULT</code><a class="headerlink" href="#tr069.data.device.DEFAULT" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Device(AVM FRITZ!Box, Serial</em> &#8211; 0896D776FAA2, 11 parameters)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tr069.data.event">
+<span id="inform-events"></span><h2>Inform Events<a class="headerlink" href="#module-tr069.data.event" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tr069.data.event.Event">
+<em class="property">class </em><code class="descclassname">tr069.data.event.</code><code class="descname">Event</code><span class="sig-paren">(</span><em>code</em>, <em>command_key=''</em><span class="sig-paren">)</span><a class="headerlink" href="#tr069.data.event.Event" title="Permalink to this definition">¶</a></dt>
+<dd><p>A TR-069 EventStruct.
+Represents an event that caused a TR-069 connection.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.Bootstrap">
+<code class="descclassname">tr069.data.event.</code><code class="descname">Bootstrap</code><a class="headerlink" href="#tr069.data.event.Bootstrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(0 BOOTSTRAP)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.Boot">
+<code class="descclassname">tr069.data.event.</code><code class="descname">Boot</code><a class="headerlink" href="#tr069.data.event.Boot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(1 Boot)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.Periodic">
+<code class="descclassname">tr069.data.event.</code><code class="descname">Periodic</code><a class="headerlink" href="#tr069.data.event.Periodic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(2 PERIODIC)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.Scheduled">
+<code class="descclassname">tr069.data.event.</code><code class="descname">Scheduled</code><a class="headerlink" href="#tr069.data.event.Scheduled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(3 SCHEDULED)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.ValueChange">
+<code class="descclassname">tr069.data.event.</code><code class="descname">ValueChange</code><a class="headerlink" href="#tr069.data.event.ValueChange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(4 VALUE CHANGE)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.Kicked">
+<code class="descclassname">tr069.data.event.</code><code class="descname">Kicked</code><a class="headerlink" href="#tr069.data.event.Kicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(5 KICKED)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.ConnectionRequest">
+<code class="descclassname">tr069.data.event.</code><code class="descname">ConnectionRequest</code><a class="headerlink" href="#tr069.data.event.ConnectionRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(6 CONNECTION REQUEST)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.TransferComplete">
+<code class="descclassname">tr069.data.event.</code><code class="descname">TransferComplete</code><a class="headerlink" href="#tr069.data.event.TransferComplete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(7 TRANSFER COMPLETE)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.DiagnosticsComplete">
+<code class="descclassname">tr069.data.event.</code><code class="descname">DiagnosticsComplete</code><a class="headerlink" href="#tr069.data.event.DiagnosticsComplete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(8 DIAGNOSTICS COMPLETE)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.RequestDownload">
+<code class="descclassname">tr069.data.event.</code><code class="descname">RequestDownload</code><a class="headerlink" href="#tr069.data.event.RequestDownload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(9 REQUEST DOWNLOAD)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.AutonomousTransferComplete">
+<code class="descclassname">tr069.data.event.</code><code class="descname">AutonomousTransferComplete</code><a class="headerlink" href="#tr069.data.event.AutonomousTransferComplete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(10 AUTONOMOUS TRANSFER COMPLETE)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.DuStateChangeComplete">
+<code class="descclassname">tr069.data.event.</code><code class="descname">DuStateChangeComplete</code><a class="headerlink" href="#tr069.data.event.DuStateChangeComplete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(11 DU STATE CHANGE COMPLETE)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.AutonomousDuStateChangeComplete">
+<code class="descclassname">tr069.data.event.</code><code class="descname">AutonomousDuStateChangeComplete</code><a class="headerlink" href="#tr069.data.event.AutonomousDuStateChangeComplete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(12 AUTONOMOUS DU STATE CHANGE COMPLETE)</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="tr069.data.event.Wakeup">
+<code class="descclassname">tr069.data.event.</code><code class="descname">Wakeup</code><a class="headerlink" href="#tr069.data.event.Wakeup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event(13 WAKEUP)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tr069.data.parameters">
+<span id="device-parameters"></span><h2>Device Parameters<a class="headerlink" href="#module-tr069.data.parameters" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="tr069.data.parameters.from_xml">
+<code class="descclassname">parameters.</code><code class="descname">from_xml</code><span class="sig-paren">(</span><em>xml: str</em><span class="sig-paren">)</span> &rarr; tr069.data.parameters.Parameters<a class="headerlink" href="#tr069.data.parameters.from_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a parameters object from XML that contains a ParameterValueStruct,
+e.g., an Inform RPC.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tr069.data.parameters.Parameter">
+<em class="property">class </em><code class="descclassname">tr069.data.parameters.</code><code class="descname">Parameter</code><span class="sig-paren">(</span><em>name</em>, <em>value</em>, <em>type='xsd:string'</em>, <em>notification_level: int = 0</em>, <em>writable: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#tr069.data.parameters.Parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A TR-069 ParameterValueStruct.
+Represents a parameter on the device as specified by the TR-069 data models.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="tr069.data.parameters.Parameters">
+<em class="property">class </em><code class="descclassname">tr069.data.parameters.</code><code class="descname">Parameters</code><span class="sig-paren">(</span><em>params: typing.Iterable[tr069.data.parameters.Parameter] = (), **kwargs: typing.Dict[str, str]</em><span class="sig-paren">)</span><a class="headerlink" href="#tr069.data.parameters.Parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of TR-069 parameters representing a device.</p>
+<dl class="method">
+<dt id="tr069.data.parameters.Parameters.all">
+<code class="descname">all</code><span class="sig-paren">(</span><em>key: str = ''</em>, <em>min_notification_level: int = 0</em><span class="sig-paren">)</span> &rarr; typing.List[tr069.data.parameters.Parameter]<a class="headerlink" href="#tr069.data.parameters.Parameters.all" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>A list containing...</dt>
+<dd><ul class="first last simple">
+<li>all parameter starting with the common prefix key, if key is empty or ends with a dot.</li>
+<li>the requested parameter key.</li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descclassname">tr069.data.parameters.</code><code class="descname">from_xml</code><span class="sig-paren">(</span><em>xml: str</em><span class="sig-paren">)</span> &rarr; tr069.data.parameters.Parameters</dt>
+<dd><p>Construct a parameters object from XML that contains a ParameterValueStruct,
+e.g., an Inform RPC.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h2>Remote Procedure Calls<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-tr069.data.rpcs"></span><dl class="function">
+<dt id="tr069.data.rpcs.make_get_rpc_methods">
+<code class="descclassname">tr069.data.rpcs.</code><code class="descname">make_get_rpc_methods</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; str<a class="headerlink" href="#tr069.data.rpcs.make_get_rpc_methods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a GetRPCMethods RPC</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tr069.data.rpcs.make_inform">
+<code class="descclassname">tr069.data.rpcs.</code><code class="descname">make_inform</code><span class="sig-paren">(</span><em>*, device: tr069.data.device.Device, events: typing.Collection[tr069.data.event.Event] = (Event(4 VALUE CHANGE), Event(1 Boot), Event(0 BOOTSTRAP)), params: typing.Union[typing.Collection[tr069.data.parameters.Parameter], NoneType] = None, time: typing.Union[datetime.datetime, NoneType] = None, retry_count: int = 0</em><span class="sig-paren">)</span> &rarr; str<a class="headerlink" href="#tr069.data.rpcs.make_inform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Inform RPC</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tr069.data.rpcs.make_set_parameter_values_response">
+<code class="descclassname">tr069.data.rpcs.</code><code class="descname">make_set_parameter_values_response</code><span class="sig-paren">(</span><em>status: int = 0</em><span class="sig-paren">)</span> &rarr; str<a class="headerlink" href="#tr069.data.rpcs.make_set_parameter_values_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a SetParameterValuesResponse</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tr069.data.rpcs.parse_set_parameter_values">
+<code class="descclassname">tr069.data.rpcs.</code><code class="descname">parse_set_parameter_values</code><span class="sig-paren">(</span><em>xml: str</em><span class="sig-paren">)</span> &rarr; typing.List[tr069.data.parameters.Parameter]<a class="headerlink" href="#tr069.data.rpcs.parse_set_parameter_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a SetParameterValues RPC</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of parameters that should be updated.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tr069.data.rpcs.make_get_parameter_values_response">
+<code class="descclassname">tr069.data.rpcs.</code><code class="descname">make_get_parameter_values_response</code><span class="sig-paren">(</span><em>params: typing.Collection[tr069.data.parameters.Parameter] = ()</em><span class="sig-paren">)</span> &rarr; str<a class="headerlink" href="#tr069.data.rpcs.make_get_parameter_values_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a GetParameterValuesResponse</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tr069.data.rpcs.parse_get_parameter_values">
+<code class="descclassname">tr069.data.rpcs.</code><code class="descname">parse_get_parameter_values</code><span class="sig-paren">(</span><em>xml: str</em><span class="sig-paren">)</span> &rarr; typing.List[str]<a class="headerlink" href="#tr069.data.rpcs.parse_get_parameter_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a GetParameterValues RPC.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of requested parameters.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tr069.data.rpcs.make_get_parameter_names_response">
+<code class="descclassname">tr069.data.rpcs.</code><code class="descname">make_get_parameter_names_response</code><span class="sig-paren">(</span><em>params: typing.Collection[tr069.data.parameters.Parameter] = ()</em><span class="sig-paren">)</span> &rarr; str<a class="headerlink" href="#tr069.data.rpcs.make_get_parameter_names_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a GetParameterNamesResponse</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tr069.data.rpcs.parse_get_parameter_names">
+<code class="descclassname">tr069.data.rpcs.</code><code class="descname">parse_get_parameter_names</code><span class="sig-paren">(</span><em>xml: str</em><span class="sig-paren">)</span> &rarr; typing.Tuple[str, bool]<a class="headerlink" href="#tr069.data.rpcs.parse_get_parameter_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a GetParameterNames RPC.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A (path, next_level) tuple.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="tr069.data.rpcs.make_set_parameter_attributes_response">
+<code class="descclassname">tr069.data.rpcs.</code><code class="descname">make_set_parameter_attributes_response</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; str<a class="headerlink" href="#tr069.data.rpcs.make_set_parameter_attributes_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a SetParameterAttributesResponse</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tr069.data.rpcs.make_request_download">
+<code class="descclassname">tr069.data.rpcs.</code><code class="descname">make_request_download</code><span class="sig-paren">(</span><em>file_type: str = '1 Firmware Upgrade Image'</em>, <em>file_type_arg=None</em><span class="sig-paren">)</span> &rarr; str<a class="headerlink" href="#tr069.data.rpcs.make_request_download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a RequestDownload RPC</p>
+</dd></dl>
+
+</div>
+<div class="section" id="requests-response">
+<h2>requests.Response<a class="headerlink" href="#requests-response" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="requests.models.Response">
+<em class="property">class </em><code class="descclassname">requests.models.</code><code class="descname">Response</code><a class="headerlink" href="#requests.models.Response" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <code class="xref py py-class docutils literal"><span class="pre">Response</span></code> object, which contains a
+server&#8217;s response to an HTTP request.</p>
+<dl class="attribute">
+<dt id="requests.models.Response.status_code">
+<code class="descname">status_code</code><em class="property"> = None</em><a class="headerlink" href="#requests.models.Response.status_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integer Code of responded HTTP Status, e.g. 404 or 200.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.headers">
+<code class="descname">headers</code><em class="property"> = None</em><a class="headerlink" href="#requests.models.Response.headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Case-insensitive Dictionary of Response Headers.
+For example, <code class="docutils literal"><span class="pre">headers['content-encoding']</span></code> will return the
+value of a <code class="docutils literal"><span class="pre">'Content-Encoding'</span></code> response header.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.raw">
+<code class="descname">raw</code><em class="property"> = None</em><a class="headerlink" href="#requests.models.Response.raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>File-like object representation of response (for advanced usage).
+Use of <code class="docutils literal"><span class="pre">raw</span></code> requires that <code class="docutils literal"><span class="pre">stream=True</span></code> be set on the request.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.url">
+<code class="descname">url</code><em class="property"> = None</em><a class="headerlink" href="#requests.models.Response.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Final URL location of Response.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.encoding">
+<code class="descname">encoding</code><em class="property"> = None</em><a class="headerlink" href="#requests.models.Response.encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encoding to decode with when accessing r.text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.history">
+<code class="descname">history</code><em class="property"> = None</em><a class="headerlink" href="#requests.models.Response.history" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of <code class="xref py py-class docutils literal"><span class="pre">Response</span></code> objects from
+the history of the Request. Any redirect responses will end
+up here. The list is sorted from the oldest to the most recent request.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.reason">
+<code class="descname">reason</code><em class="property"> = None</em><a class="headerlink" href="#requests.models.Response.reason" title="Permalink to this definition">¶</a></dt>
+<dd><p>Textual reason of responded HTTP Status, e.g. &#8220;Not Found&#8221; or &#8220;OK&#8221;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.cookies">
+<code class="descname">cookies</code><em class="property"> = None</em><a class="headerlink" href="#requests.models.Response.cookies" title="Permalink to this definition">¶</a></dt>
+<dd><p>A CookieJar of Cookies the server sent back.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.elapsed">
+<code class="descname">elapsed</code><em class="property"> = None</em><a class="headerlink" href="#requests.models.Response.elapsed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The amount of time elapsed between sending the request
+and the arrival of the response (as a timedelta).
+This property specifically measures the time taken between sending
+the first byte of the request and finishing parsing the headers. It
+is therefore unaffected by consuming the response content or the
+value of the <code class="docutils literal"><span class="pre">stream</span></code> keyword argument.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.request">
+<code class="descname">request</code><em class="property"> = None</em><a class="headerlink" href="#requests.models.Response.request" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <code class="xref py py-class docutils literal"><span class="pre">PreparedRequest</span></code> object to which this
+is a response.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.is_redirect">
+<code class="descname">is_redirect</code><a class="headerlink" href="#requests.models.Response.is_redirect" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if this Response is a well-formed HTTP redirect that could have
+been processed automatically (by <code class="xref py py-meth docutils literal"><span class="pre">Session.resolve_redirects()</span></code>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.is_permanent_redirect">
+<code class="descname">is_permanent_redirect</code><a class="headerlink" href="#requests.models.Response.is_permanent_redirect" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if this Response one of the permanent versions of redirect</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.apparent_encoding">
+<code class="descname">apparent_encoding</code><a class="headerlink" href="#requests.models.Response.apparent_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>The apparent encoding, provided by the chardet library</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="requests.models.Response.iter_content">
+<code class="descname">iter_content</code><span class="sig-paren">(</span><em>chunk_size=1</em>, <em>decode_unicode=False</em><span class="sig-paren">)</span><a class="headerlink" href="#requests.models.Response.iter_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates over the response data.  When stream=True is set on the
+request, this avoids reading the content at once into memory for
+large responses.  The chunk size is the number of bytes it should
+read into memory.  This is not necessarily the length of each item
+returned as decoding can take place.</p>
+<p>chunk_size must be of type int or None. A value of None will
+function differently depending on the value of <cite>stream</cite>.
+stream=True will read data as it arrives in whatever size the
+chunks are received. If stream=False, data is returned as
+a single chunk.</p>
+<p>If decode_unicode is True, content will be decoded using the best
+available encoding based on the response.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="requests.models.Response.iter_lines">
+<code class="descname">iter_lines</code><span class="sig-paren">(</span><em>chunk_size=512</em>, <em>decode_unicode=None</em>, <em>delimiter=None</em><span class="sig-paren">)</span><a class="headerlink" href="#requests.models.Response.iter_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates over the response data, one line at a time.  When
+stream=True is set on the request, this avoids reading the
+content at once into memory for large responses.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method is not reentrant safe.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.content">
+<code class="descname">content</code><a class="headerlink" href="#requests.models.Response.content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Content of the response, in bytes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.text">
+<code class="descname">text</code><a class="headerlink" href="#requests.models.Response.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Content of the response, in unicode.</p>
+<p>If Response.encoding is None, encoding will be guessed using
+<code class="docutils literal"><span class="pre">chardet</span></code>.</p>
+<p>The encoding of the response content is determined based solely on HTTP
+headers, following RFC 2616 to the letter. If you can take advantage of
+non-HTTP knowledge to make a better guess at the encoding, you should
+set <code class="docutils literal"><span class="pre">r.encoding</span></code> appropriately before accessing this property.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="requests.models.Response.json">
+<code class="descname">json</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#requests.models.Response.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the json-encoded content of a response, if any.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> &#8211; Optional arguments that <code class="docutils literal"><span class="pre">json.loads</span></code> takes.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.6)"><strong>ValueError</strong></a> &#8211; If the response body does not contain valid json.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="requests.models.Response.links">
+<code class="descname">links</code><a class="headerlink" href="#requests.models.Response.links" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parsed header links of the response, if any.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="requests.models.Response.raise_for_status">
+<code class="descname">raise_for_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#requests.models.Response.raise_for_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises stored <code class="xref py py-class docutils literal"><span class="pre">HTTPError</span></code>, if one occurred.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="requests.models.Response.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#requests.models.Response.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Releases the connection back to the pool. Once this method has been
+called the underlying <code class="docutils literal"><span class="pre">raw</span></code> object must not be accessed again.</p>
+<p><em>Note: Should not normally need to be called explicitly.</em></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      
+      
+      
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
