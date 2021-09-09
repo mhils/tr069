@@ -26,7 +26,7 @@ setup(
             "hypothesis~=3.6.1",
         ],
         'pretty': [
-            "mitmproxy~=2.0.0",
+            "mitmproxy~=7.0.0",
             "pygments~=2.2.0",
         ],
     },
