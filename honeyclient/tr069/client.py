@@ -164,7 +164,7 @@ class Client:
         count = 0
         while True:
             rpc = self.messages[-1]
-            if rpc.status_code == 204:
+            if rpc.status_code == 204 or (rpc.status_code == 200 and rpc.text == ""):
                 break
             self._handle_server_rpc(rpc)
             count += 1
