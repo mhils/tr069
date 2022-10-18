@@ -190,6 +190,8 @@ class Client:
             path, _ = rpcs.parse_get_parameter_names(rpc.text)
             params = self.device.params.all(path)
             self.get_parameter_names_response(params)
+        elif rpc_name == "cwmp:Download":
+            self.download_response()
         else:
             raise NotImplementedError(f"Unknown server RPC: {rpc_name}")
 
@@ -230,3 +232,7 @@ class Client:
     @_wrap_rpc(rpcs.make_get_parameter_names_response)
     def get_parameter_names_response(self, *args, **kwargs):
         return self.request(rpcs.make_get_parameter_names_response(*args, **kwargs))
+
+    @_wrap_rpc(rpcs.make_download_response)
+    def download_response(self, *args, **kwargs):
+        return self.request(rpcs.make_download_response(*args, **kwargs))
